@@ -29,7 +29,7 @@
     </div>
     <div class="page-container">
       <div ref="section1" class="section">
-        <MLC />
+        <MLC @goToLogin="scrollTo(sections[2].ref)" />
       </div>
       <div ref="section2" class="section">
         <WhatIsIt />
