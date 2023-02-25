@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="whatisit main-container">
     SALAM WHAT IS It
   </div>
 </template>
@@ -10,5 +10,12 @@ export default {
 </script>
 
 <style scoped>
+.whatisit.main-container {
+  width: 100%;
+  height: 100%;
+  background-image: url("~/assets/backgrounds/WhatIsIt.svg#svgView(preserveAspectRatio(none))");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
 
 </style>

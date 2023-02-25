@@ -1,15 +1,28 @@
 <template>
-  <div class="main-container">
+  <div class="main-page main-container">
     <div class="header">
-      <nav class="nav m-auto">
+      <nav class="nav">
         <ul class="nav-list">
           <li
             v-for="(section, index) in sections"
             :key="index"
-            :class="{ active: currentSectionIndex === index }"
+            :class="{ item: true, 'ml-auto': index === 2}"
             @click="scrollTo(section.ref)"
           >
-            {{ section.name }}
+            <div class="item-name">
+              <div v-if="index === 0" class="mlc-logo">
+                <MLCLogo />
+              </div>
+              <div v-else>
+                {{ section.display }}
+              </div>
+            </div>
+            <div class="item-isactive">
+              <div v-if="currentSectionIndex === index" class="main-page dot">
+                <Dot />
+              </div>
+              <div v-else />
+            </div>
           </li>
         </ul>
       </nav>
@@ -32,23 +45,25 @@
 import Login from '~/components/Login'
 import MLC from '~/components/MLC'
 import WhatIsIt from '~/components/WhatIsIt'
+import MLCLogo from '~/components/MLCLogo'
+import Dot from '~/components/Dot'
 
 export default {
   name: 'MainPage',
-  components: { WhatIsIt, MLC, Login },
+  components: { Dot, MLCLogo, WhatIsIt, MLC, Login },
   data () {
     return {
       sections: [
-        { name: 'Section 1', display: 'MlC', ref: null },
-        { name: 'Section 2', display: 'WHAT IS IT', ref: null },
-        { name: 'Section 3', ref: null }
+        { name: 'section1', display: 'Salam', ref: null },
+        { name: 'section2', display: 'WHAT IS IT?', ref: null },
+        { name: 'section3', display: 'LOGIN', ref: null }
       ],
       currentSectionIndex: 0
     }
   },
   mounted () {
     this.sections.forEach((section) => {
-      section.ref = this.$refs[section.name.replace(' ', '').toLowerCase()]
+      section.ref = this.$refs[section.name]
     })
 
     const pageContainer = this.$el.querySelector('.page-container')
@@ -97,51 +112,73 @@ export default {
 
 <style scoped>
 .header {
+  font-family: "Inter", sans-serif;
+  font-weight: 200;
+  font-size: 1rem;
+  letter-spacing: 2px;
   height: 10%;
   display: flex;
   justify-content: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+  color: white;
 }
 
-.main-container {
+.main-page.main-container {
   height: 100vh;
-  /*background-color: black;*/
+  background-color: black;
+  padding: 0 10% 6.7% 10%;
 }
 
 .nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: auto;
-  margin-bottom: auto;
   padding: 0 5%;
+  width: 100%;
+  height: 100%;
 }
 
 .nav-list {
+  width: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
   display: flex;
+  align-items: flex-start;
+  justify-content: stretch;
   list-style: none;
-  margin: 0;
   padding: 0;
 }
 
 .nav-list li {
   margin-right: 20px;
-  font-size: 18px;
-  font-weight: bold;
   cursor: pointer;
-}
-
-.nav-list li.active {
-  color: red;
 }
 
 .page-container {
   position: relative;
   height: 90%;
   overflow-y: scroll;
+  border-radius: 32px;
 }
 
 .section {
   height: 100%;
 }
+
+.main-page.dot {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+.header .item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 0.5rem;
+}
+
+.item-name > .mlc-logo {
+  width: 2.5rem;
+}
+
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login main-container">
     SALAM login
   </div>
 </template>
@@ -12,5 +12,11 @@ export default {
 </script>
 
 <style scoped>
-
+.login.main-container {
+  width: 100%;
+  height: 100%;
+  background-image: url("~/assets/backgrounds/Login.svg#svgView(preserveAspectRatio(none))");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
 </style>
