@@ -5,12 +5,12 @@
     </div>
     <div class="login-stn-container">
       <label>STUDENT NUMBER OR EMAIL</label>
-      <input v-model="loginData.username" type="text" class="login-input" placeholder="99123456">
+      <input v-model="loginData.id" type="text" class="login-input" placeholder="99123456">
     </div>
     <form>
       <div class="login-nc-container">
         <label>NATIONAL NUMBER</label>
-        <input v-model="loginData.nationalNumber" type="text" class="login-input" placeholder="0123456789">
+        <input v-model="loginData.national_id" type="text" class="login-input" placeholder="0123456789">
       </div>
       <b-button variant="outline-secondary" class="button" @click.prevent="login">
         <div v-if="!loading">
@@ -18,7 +18,7 @@
         </div>
         <b-spinner v-else />
       </b-button>
-      <div v-if="loginSuccessFul" class="successful login-message">
+      <div v-if="loginSuccessful" class="successful login-message">
         <ul>
           <li>
             LOGIN SUCCESSFUL
@@ -43,11 +43,11 @@ export default {
   data () {
     return {
       loginData: {
-        username: undefined,
-        nationalNumber: undefined
+        id: undefined,
+        national_id: undefined
       },
       loading: false,
-      loginSuccessFul: false,
+      loginSuccessful: false,
       loginFailed: false
     }
   },
@@ -57,12 +57,12 @@ export default {
       this.loginSuccessful = false
       this.loginFailed = false
       this.$axios.post(
-        '/token/',
+        '/login/',
         this.loginData
       )
         .then((response) => {
-          this.$store.commit('token/set', response.data.token)
           this.loginSuccessful = true
+          this.$store.commit('token/set', response.data.access)
         })
         .catch(() => {
           this.loginFailed = true
