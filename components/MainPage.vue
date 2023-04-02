@@ -160,6 +160,7 @@ export default {
 
 .section {
   height: 100%;
+  margin-bottom: 5rem;
 }
 
 .main-page.dot {
