@@ -76,6 +76,7 @@ export default {
   },
   methods: {
     handleWheel (e) {
+      e.preventDefault()
       const delta = e.deltaY
 
       let nextIndex = this.currentSectionIndex
@@ -154,13 +155,18 @@ export default {
 .page-container {
   position: relative;
   height: 90%;
-  overflow-y: scroll;
+  overflow-y: hidden;
   border-radius: 32px;
 }
 
 .section {
   height: 100%;
+  scroll-behavior: smooth;
   margin-bottom: 5rem;
+}
+
+.section:last-child {
+  margin-bottom: 0;
 }
 
 .main-page.dot {
