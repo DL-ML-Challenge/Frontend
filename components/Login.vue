@@ -5,12 +5,12 @@
     </div>
     <div class="login-stn-container">
       <label>STUDENT NUMBER OR EMAIL</label>
-      <input v-model="loginData.id" type="text" class="login-input" placeholder="99123456">
+      <input v-model="loginData.username" type="text" class="login-input" placeholder="99123456">
     </div>
     <form>
       <div class="login-nc-container">
         <label>NATIONAL NUMBER</label>
-        <input v-model="loginData.national_id" type="text" class="login-input" placeholder="0123456789">
+        <input v-model="loginData.password" type="text" class="login-input" placeholder="0123456789">
       </div>
       <b-button variant="outline-secondary" class="button" @click.prevent="login">
         <div v-if="!loading">
@@ -43,8 +43,8 @@ export default {
   data () {
     return {
       loginData: {
-        id: undefined,
-        national_id: undefined
+        username: undefined,
+        password: undefined
       },
       loading: false,
       loginSuccessful: false,
@@ -57,12 +57,13 @@ export default {
       this.loginSuccessful = false
       this.loginFailed = false
       this.$axios.post(
-        '/login/',
+        'login/',
         this.loginData
       )
         .then((response) => {
           this.loginSuccessful = true
-          this.$store.commit('token/set', response.data.access)
+          this.$store.commit('token/set', response.data.token)
+          this.$router.push('/dashboard')
         })
         .catch(() => {
           this.loginFailed = true

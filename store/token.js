@@ -5,5 +5,8 @@ export const state = () => ({
 export const mutations = {
   set (state, token) {
     state.token = 'Token ' + token
+  },
+  unset (state) {
+    state.token = ''
   }
 }
