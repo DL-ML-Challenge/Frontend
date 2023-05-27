@@ -26,7 +26,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/vuex-persist.js', ssr: false }
+    { src: '~/plugins/vuex-persist.js', ssr: false },
+    { src: '~/plugins/axios.js', ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -50,13 +51,13 @@ export default {
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     // baseURL: '//mlchallenge.ir/api/'
-    baseURL: '//localhost:8000/'
+    baseURL: '//localhost:8000/',
+    debug: true
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
   generate: {
     subFolders: false
-  },
-  router: {}
+  }
 }

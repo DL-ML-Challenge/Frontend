@@ -67,15 +67,8 @@ export default {
       }
     })
       .then((response) => {
-        console.log(response.data)
         this.$store.commit('userData/setUsername', response.data.full_name)
         this.$store.commit('userData/setTeamName', response.data.group_name)
-      })
-      .catch((error) => {
-        if (error.response.status === 401) {
-          this.$store.commit('token/unset')
-          this.$router.push('/')
-        }
       })
   }
 }
