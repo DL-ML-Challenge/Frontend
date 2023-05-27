@@ -1,17 +1,11 @@
 <template>
   <div class="main-container">
-    <div class="dotted-container">
-      <div class="left-container">
-        <div class="header-container">
-          SUBMIT
-        </div>
-        <div class="plus">
-          <div class="up" />
-          <div class="right" />
-        </div>
+    <div class="left-container">
+      <div class="header-container">
+        SUBMIT
       </div>
-      <div class="image-container">
-        <div class="leonardo-image" />
+      <div class="text-uppercase main-text">
+        Submit Your Answers for each phase and Track your earlier submissions
       </div>
     </div>
   </div>
@@ -27,22 +21,14 @@ export default {
 
 <style scoped>
 .main-container {
-  background: linear-gradient(180deg, #08111E 0%, #081120 16.67%, #050D1A 40.63%, #020814 61.46%, #010912 81.77%, #00040D 100%);
+  background-image: url("~/assets/backgrounds/Submit.png");
   width: 100%;
   height: 100%;
-  padding: 2%;
+  padding: 2% 2% 2% 4%;
   border-radius: 13px;
-}
-
-.dotted-container {
-  border: 2px dashed #998C91;
-  border-radius: 10px;
-  width: 100%;
-  height: 100%;
-  padding: 3%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .left-container {
@@ -59,39 +45,12 @@ export default {
   letter-spacing: 0.5rem;
 }
 
-.image-container {
-  width: 50%;
-  height: 100%;
-}
-
-.leonardo-image {
-  background-image: url("~/assets/backgrounds/Submit.png");
-  width: 100%;
-  height: 100%;
-}
-
-.plus {
-  position: relative;
-  height: 35%;
-  margin: auto;
-}
-
-.plus > .up {
-  position: relative;
-  top: 0;
-  background: #077DAE;
-  border-radius: 100px;
-  width: 9px;
-  height: 100%;
-}
-
-.plus > .right {
-  width: 9px;
-  height: 100%;
-  top: 0;
-  position: absolute;
-  background: #077DAE;
-  border-radius: 100px;
-  transform: rotate(-90deg);
+.main-text {
+  width: 75%;
+  font-family: 'Avenir Next LT Pro', sans-serif;
+  font-weight: 300;
+  font-size: 1.25rem;
+  letter-spacing: 0.4rem;
+  color: #998C91;
 }
 </style>
