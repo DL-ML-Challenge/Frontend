@@ -11,7 +11,7 @@
             </div>
           </li>
           <li class="item ml-auto">
-            <div class="item-name logout">
+            <div class="item-name logout" @click.prevent="logout()">
               Logout
             </div>
             <div />
@@ -70,6 +70,12 @@ export default {
         this.$store.commit('userData/setUsername', response.data.full_name)
         this.$store.commit('userData/setTeamName', response.data.group_name)
       })
+  },
+  methods: {
+    logout () {
+      this.$store.commit('token/unset')
+      this.$router.push('/')
+    }
   }
 }
 </script>
@@ -151,6 +157,10 @@ export default {
 
 .item-name.logout {
   color: #FF9999;
+}
+
+.item-name.logout:hover {
+  cursor: pointer;
 }
 
 .page-header {
