@@ -77,7 +77,7 @@ export default {
 .header > p {
   width: 60%;
   color: #F4E779;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   letter-spacing: 0.4rem;
 }
 

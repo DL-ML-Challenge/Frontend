@@ -11,7 +11,7 @@
         This Phase contains Contents On NLP and Vision
       </p>
     </div>
-    <div class="d-flex flex-row mt-2 p-4 h-50">
+    <div class="d-flex flex-row mt-2 p-2 h-50">
       <b-card class="mr-4 box-container nlp" no-body>
         <b-card-body>
           <p class="topic mb-0">
@@ -65,13 +65,14 @@ export default {
 }
 
 .header > p {
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 300;
+  width: 75%;
 }
 
 .box-container {
   width: 30%;
-  height: 100%;
+  height: 80%;
   border-radius: 13px;
   color: #BBC3E0;
 }

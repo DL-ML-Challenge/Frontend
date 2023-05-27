@@ -59,7 +59,7 @@ export default {
 .data-container {
   font-family: "Avenir Next LT Pro", sans-serif;
   font-weight: 300;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   letter-spacing: 0.3rem;
   text-transform: uppercase;
   color: #A38B72;
