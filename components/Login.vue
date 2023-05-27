@@ -3,36 +3,49 @@
     <div class="login-header-container">
       LOGIN
     </div>
-    <div class="login-stn-container">
-      <label>STUDENT NUMBER OR EMAIL</label>
-      <input v-model="loginData.username" type="text" class="login-input" placeholder="99123456">
-    </div>
-    <form>
+    <form @submit.prevent="login()">
+      <div class="login-stn-container">
+        <label>STUDENT NUMBER OR EMAIL</label>
+        <input
+          id="username"
+          v-model="loginData.username"
+          type="text"
+          class="login-input"
+          placeholder="99123456"
+          name="username"
+        >
+      </div>
       <div class="login-nc-container">
         <label>NATIONAL NUMBER</label>
-        <input v-model="loginData.password" type="text" class="login-input" placeholder="0123456789">
+        <input
+          v-model="loginData.password"
+          type="password"
+          class="login-input"
+          placeholder="0123456789"
+          name="password"
+        >
       </div>
-      <b-button variant="outline-secondary" class="button" @click.prevent="login">
+      <b-button variant="outline-secondary" class="button" type="submit">
         <div v-if="!loading">
           LOGIN
         </div>
         <b-spinner v-else />
       </b-button>
-      <div v-if="loginSuccessful" class="successful login-message">
-        <ul>
-          <li>
-            LOGIN SUCCESSFUL
-          </li>
-        </ul>
-      </div>
-      <div v-if="loginFailed" class="failed login-message">
-        <ul>
-          <li>
-            LOGIN FAILED
-          </li>
-        </ul>
-      </div>
     </form>
+    <div v-if="loginSuccessful" class="successful login-message">
+      <ul>
+        <li>
+          LOGIN SUCCESSFUL
+        </li>
+      </ul>
+    </div>
+    <div v-if="loginFailed" class="failed login-message">
+      <ul>
+        <li>
+          LOGIN FAILED
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
