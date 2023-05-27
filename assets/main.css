@@ -49,3 +49,8 @@
   src: url("~/assets/fonts/Inter/Inter Light.otf") format("opentype");
   font-weight: light;
 }
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}

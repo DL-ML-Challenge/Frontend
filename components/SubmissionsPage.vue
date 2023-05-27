@@ -17,7 +17,7 @@
             <div />
           </li>
           <li class="item">
-            <div class="item-name">
+            <div class="item-name hover-pointer" @click.prevent="$router.push('/dashboard')">
               Dashboard
             </div>
             <div class="main-page dot">
@@ -28,56 +28,49 @@
       </nav>
     </div>
     <div class="page-header">
-      DASHBOARD
+      <b-button class="phase-button phase1">
+        <span class="font-weight-light">PHASE</span> <span class="font-weight-bold">ONE</span>
+      </b-button>
+      <b-button class="phase-button phase2" disabled>
+        <span class="font-weight-light">PHASE</span> <span class="font-weight-bold">TWO</span>
+      </b-button>
+      <b-button class="phase-button phase3" disabled>
+        <span class="font-weight-light">PHASE</span> <span class="font-weight-bold">THREE</span>
+      </b-button>
+    </div>
+    <div class="page-header topic-button-container mt-3">
+      <b-button
+        v-for="(topicText, i) in ['VISION', 'NLP']"
+        :key="i"
+        :class="{'topic-button': true, 'enabled': chosenTopic === i, 'disabled': chosenTopic !== i}"
+        @click.prevent="chosenTopic = i"
+      >
+        {{ topicText }}
+      </b-button>
     </div>
     <div class="page-container">
-      <div class="section submit">
-        <Submit @click.native="goToSubmissions()" />
-      </div>
-      <div class="section">
-        <MyInfo />
-      </div>
-      <div class="section">
-        <Phase1 />
-      </div>
-      <div class="section">
-        <Ranking />
-      </div>
+      <div><SubmitBox /></div>
     </div>
   </div>
 </template>
 
 <script>
-
 import MLCLogo from './MLCLogo.vue'
 import Dot from './Dot.vue'
-import Submit from './dashboard/Submit.vue'
-import MyInfo from './dashboard/MyInfo.vue'
-import Phase1 from './dashboard/Phase1.vue'
-import Ranking from './dashboard/Ranking.vue'
+import SubmitBox from './submissions/SubmitBox.vue'
 
 export default {
-  // eslint-disable-next-line vue/multi-word-component-names
-  name: 'Dashboard',
-  components: { Ranking, Phase1, MyInfo, Submit, Dot, MLCLogo },
-  mounted () {
-    this.$axios.get('user/', {
-      headers: {
-        Authorization: this.$store.state.token.token
-      }
-    })
-      .then((response) => {
-        this.$store.commit('userData/setUsername', response.data.full_name)
-        this.$store.commit('userData/setTeamName', response.data.group_name)
-      })
+  name: 'SubmissionsPage',
+  components: { SubmitBox, Dot, MLCLogo },
+  data () {
+    return {
+      chosenTopic: 0
+    }
   },
   methods: {
     logout () {
       this.$store.commit('token/unset')
       this.$router.push('/')
-    },
-    goToSubmissions () {
-      this.$router.push('/submissions')
     }
   }
 }
@@ -142,20 +135,7 @@ export default {
   height: 0.5rem;
 }
 
-.page-container {
-  margin-top: 3rem;
-  position: relative;
-  height: 80%;
-  overflow: hidden;
-  display: grid;
-  grid-row: auto auto;
-  grid-template-columns: 49% 49%;
-  grid-template-rows: 48% 48%;
-  row-gap: 4%;
-  column-gap: 2%;
-}
-
-.section.submit:hover {
+.hover-pointer:hover {
   cursor: pointer;
 }
 
@@ -172,7 +152,69 @@ export default {
   font-weight: 700;
   font-size: 3rem;
   letter-spacing: 0.4rem;
-  margin-left: 4rem;
   color: white;
+}
+
+.phase-button {
+  font-family: "Avenir Next LT Pro", sans-serif;
+  color: #D9D9D9;
+  border-radius: 52px;
+  padding-right: 3%;
+  padding-left: 3%;
+  letter-spacing: 0.2rem;
+}
+
+.phase1 {
+  font-size: 2rem;
+  background: #510A8A;
+  border: 0;
+}
+
+.phase2 {
+  font-size: 1.5rem;
+  background: transparent;
+  border: 1px solid #141988;
+}
+
+.phase3 {
+  font-size: 1.5rem;
+  background: transparent;
+  border: 1px solid #730061;
+}
+
+.page-header.topic-button-container {
+  display: flex;
+  flex-direction: row;
+  column-gap: 1rem;
+}
+
+.topic-button {
+  font-family: "Avenir Next LT Pro", sans-serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 44px;
+  padding-right: 3%;
+  padding-left: 3%;
+  letter-spacing: 0.2rem;
+}
+
+.topic-button.enabled {
+  background: #D9D9D9;
+  color: black;
+}
+
+.topic-button.disabled {
+  background: transparent;
+  border: 1px solid #D9D9D9;
+}
+
+.page-container {
+  height: 20%;
+}
+
+.page-container > div {
+  margin-top: 2rem;
+  width: 100%;
+  height: 15rem;
 }
 </style>
