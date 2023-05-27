@@ -1,7 +1,21 @@
 @font-face {
   font-family: "Avenir Next LT Pro";
-  src: url("~/assets/fonts/AvenirLTProBlack.otf") format("opentype");
+  src: url("~/assets/fonts/AvenirLTProMedium.otf") format("opentype");
+  font-weight: normal;
 }
+
+@font-face {
+  font-family: "Avenir Next LT Pro";
+  src: url("~/assets/fonts/AvenirLTProLight.otf") format("opentype");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Avenir Next LT Pro";
+  src: url("~/assets/fonts/AvenirLTProBlack.otf") format("opentype");
+  font-weight: 700;
+}
+
 
 @font-face {
   font-family: Inter;
