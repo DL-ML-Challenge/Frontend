@@ -10,3 +10,9 @@ export const mutations = {
     state.token = ''
   }
 }
+
+export const getters = {
+  isLoggedIn (state) {
+    return !(!state.token || state.token === '')
+  }
+}
