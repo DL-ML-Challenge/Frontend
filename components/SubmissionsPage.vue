@@ -50,6 +50,9 @@
     </div>
     <div class="page-container">
       <div><SubmitBox /></div>
+      <div class="mt-5">
+        <SubmissionList />
+      </div>
     </div>
   </div>
 </template>
@@ -58,10 +61,11 @@
 import MLCLogo from './MLCLogo.vue'
 import Dot from './Dot.vue'
 import SubmitBox from './submissions/SubmitBox.vue'
+import SubmissionList from './submissions/SubmissionList.vue'
 
 export default {
   name: 'SubmissionsPage',
-  components: { SubmitBox, Dot, MLCLogo },
+  components: { SubmissionList, SubmitBox, Dot, MLCLogo },
   data () {
     return {
       chosenTopic: 0
