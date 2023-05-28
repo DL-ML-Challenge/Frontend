@@ -47,9 +47,7 @@ export default {
   },
   methods: {
     fileDrop (e) {
-      console.log(e.dataTransfer.files)
       this.$refs.fileInput.files = e.dataTransfer.files
-      console.log(this.$refs.fileInput.files)
       this.$forceUpdate()
     },
     file () {
@@ -60,6 +58,28 @@ export default {
     },
     submit () {
       this.loading = true
+      const challengeName = this.$parent.challengeName()
+      const phase = this.$parent.phase()
+
+      const formData = new FormData()
+      formData.append('file', this.file())
+      this.$axios.post(
+        '/' + challengeName + '/' + phase + '/submit/',
+        formData,
+        {
+          headers: { Authorization: this.$store.state.token.token },
+          'Content-Type': 'multipart/form-data'
+        }).then((response) => {
+        this.loading = false
+        location.reload()
+      })
+        .catch((error) => {
+          console.log(error)
+          this.loading = false
+          this.$bvToast.toast('Failed to submit file', {
+            autoHideDelay: 5000
+          })
+        })
     }
   }
 }

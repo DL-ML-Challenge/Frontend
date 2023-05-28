@@ -75,6 +75,16 @@ export default {
     logout () {
       this.$store.commit('token/unset')
       this.$router.push('/')
+    },
+    challengeName () {
+      if (this.chosenTopic === 0) {
+        return 'vision'
+      } else {
+        return 'nlp'
+      }
+    },
+    phase () {
+      return '1'
     }
   }
 }
