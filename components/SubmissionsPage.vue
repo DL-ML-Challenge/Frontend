@@ -49,7 +49,9 @@
       </b-button>
     </div>
     <div class="page-container">
-      <div><SubmitBox /></div>
+      <div class="submit-box">
+        <SubmitBox />
+      </div>
       <div class="mt-5">
         <SubmissionList />
       </div>
@@ -96,7 +98,7 @@ export default {
   font-weight: 200;
   font-size: 1rem;
   letter-spacing: 2px;
-  height: 10%;
+  height: 10vh;
   display: flex;
   justify-content: center;
   box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
@@ -104,7 +106,7 @@ export default {
 }
 
 .main-page.main-container {
-  height: 100vh;
+  min-height: 100vh;
   background-color: black;
   padding: 0 10% 6.7% 10%;
 }
@@ -222,11 +224,7 @@ export default {
   border: 1px solid #D9D9D9;
 }
 
-.page-container {
-  height: 20%;
-}
-
-.page-container > div {
+.page-container > .submit-box {
   margin-top: 2rem;
   width: 100%;
   height: 15rem;

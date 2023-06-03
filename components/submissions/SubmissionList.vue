@@ -8,8 +8,8 @@
           </div>
           <b-container class="submission-table">
             <b-row class="first-row">
-              <b-col />
-              <b-col class="text-left">
+              <b-col cols="1" />
+              <b-col class="text-left ml-2">
                 TIME
               </b-col>
               <b-col class="text-center">
@@ -18,6 +18,19 @@
               <b-col class="text-right">
                 DOWNLOAD
               </b-col>
+            </b-row>
+            <b-row v-for="(submission, i) in submissions" :key="i" class="custom-row">
+              <b-col cols="1" class="text-center id">
+                {{ i + 1 }}
+              </b-col>
+              <b-col class="text-left time ml-2">
+                {{ submission.created_at | verboseDate }}
+              </b-col>
+              <b-col class="text-center score">
+                <span v-if="isScoreJudged(submission.score)">{{ submission.score | roundScore }}</span>
+                <span v-else>PENDING</span>
+              </b-col>
+              <b-col />
             </b-row>
           </b-container>
         </div>
@@ -30,25 +43,59 @@
 
 export default {
   name: 'SubmissionList',
+  filters: {
+    roundScore (score) {
+      return Math.round(score * 100) / 100
+    },
+    verboseDate (date) {
+      const diff = Math.trunc((Date.now() - new Date(date)) / 1000)
+      const days = Math.trunc(diff / 60 / 60 / 24)
+      const hours = Math.trunc((diff) % (60 * 60 * 24) / 60 / 60)
+      const minutes = Math.trunc((diff % 360) / 60)
+      let result = String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0')
+      if (days > 0) {
+        result = days + ' Days ' + result
+      }
+      return result
+    }
+  },
   data () {
     return {
       submissions: []
     }
   },
   beforeMount () {
-    this.$axios.get('')
+    const challengeName = this.$parent.challengeName()
+    const phase = this.$parent.phase()
+    this.$axios.get(
+      '/' + challengeName + '/' + phase + '/submit/',
+      {
+        headers: {
+          Authorization: this.$store.state.token.token
+        }
+      }
+    )
+      .then((response) => {
+        console.log(response.data)
+        this.submissions = response.data.results
+      })
+  },
+  methods: {
+    isScoreJudged (score) {
+      console.log(score)
+      return score !== null && Math.trunc(score) !== -1
+    }
   }
 }
 </script>
 
 <style scoped>
 .line {
-  position: relative;
   padding: 0.3rem;
-  height: 100%;
   border-top: 1px solid white;
   border-left: 1px solid white;
   border-right: 1px solid white;
+  border-bottom: 15px solid black;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 20px;
 }
@@ -56,6 +103,7 @@ export default {
 .line.last {
   padding-left: 2%;
   padding-right: 2%;
+  padding-bottom: 2%;
 }
 
 .line-title {
@@ -75,11 +123,43 @@ export default {
 
 .submission-table {
   font-family: "Avenir Next LT Pro", sans-serif;
+  width: 90%;
+  max-width: none;
 }
 
 .submission-table > .first-row {
   font-size: 1rem;
   color: white;
   font-weight: 300;
+}
+
+.submission-table > .custom-row {
+  background: #D9D9D9;
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 12px;
+}
+
+.custom-row > .time {
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: 300;
+  letter-spacing: 0.2rem;
+}
+
+.custom-row > .score {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.2rem;
+}
+
+.submission-table >> .row {
+  width: 100%;
+}
+
+.custom-row > .id {
+  font-size: 1.2rem;
 }
 </style>
