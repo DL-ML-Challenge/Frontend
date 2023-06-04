@@ -8,7 +8,7 @@
     </div>
     <b-card-group deck class="w-75 mt-3">
       <b-card no-body class="phase-card">
-        <b-card-body class="position-relative pb-0 phase1 phase-body">
+        <b-card-body class="position-relative pb-0 phase1 phase-body" @click.prevent="goToRanking()">
           <div class="phase-text">
             <span>Phase</span>
             <span class="font-weight-bold">One</span>
@@ -51,7 +51,12 @@
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: 'Ranking'
+  name: 'Ranking',
+  methods: {
+    goToRanking () {
+      this.$router.push('/ranking')
+    }
+  }
 }
 </script>
 
@@ -135,5 +140,9 @@ export default {
 
 .phase-body {
   border-radius: 13px;
+}
+
+.phase1.phase-body:hover {
+  cursor: pointer;
 }
 </style>

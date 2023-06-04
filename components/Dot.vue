@@ -1,11 +1,17 @@
 <template>
-  <span class="dot" />
+  <span class="dot" :style="{'background-color': computedColor}" />
 </template>
 
 <script>
 export default {
   // eslint-disable-next-line vue/no-reserved-component-names
-  name: 'Dot'
+  name: 'DotComponent',
+  props: ['color'],
+  computed: {
+    computedColor () {
+      return this.color || '#bbb'
+    }
+  }
 }
 </script>
 
@@ -13,7 +19,6 @@ export default {
 .dot {
   height: 100%;
   width: 100%;
-  background-color: #bbb;
   border-radius: 50%;
   display: inline-block;
 }
