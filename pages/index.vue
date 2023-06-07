@@ -7,6 +7,7 @@ import MainPage from '~/components/MainPage'
 
 export default {
   name: 'IndexPage',
-  components: { MainPage }
+  components: { MainPage },
+  middleware: ['gtd']
 }
 </script>

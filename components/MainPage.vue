@@ -61,11 +61,6 @@ export default {
       currentSectionIndex: 0
     }
   },
-  beforeMount () {
-    if (this.$store.getters['token/isLoggedIn']) {
-      this.$router.push('/dashboard')
-    }
-  },
   mounted () {
     this.sections.forEach((section) => {
       section.ref = this.$refs[section.name]
