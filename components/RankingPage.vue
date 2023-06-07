@@ -43,7 +43,13 @@ import RankingList from './ranking/RankingList.vue'
 
 export default {
   name: 'RankingPage',
-  components: { RankingList, Dot, MLCLogo }
+  components: { RankingList, Dot, MLCLogo },
+  methods: {
+    logout () {
+      this.$store.commit('token/unset')
+      this.$router.push('/')
+    }
+  }
 }
 </script>
 

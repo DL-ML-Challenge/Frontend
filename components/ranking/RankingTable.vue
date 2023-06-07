@@ -31,9 +31,9 @@
           </b-col>
         </b-row>
         <template v-if="loading">
-          <b-skeleton v-for="i in 3" :key="i" class="main-row custom-row"></b-skeleton>
+          <b-skeleton v-for="i in 3" :key="i" class="main-row custom-row" />
         </template>
-        <b-row v-else v-for="(rank, i) in ranking" :key="i" class="main-row custom-row main-row-table">
+        <b-row v-for="(rank, i) in ranking" v-else :key="i" class="main-row custom-row main-row-table">
           <b-col class="text-left">
             {{ rank.name }}
           </b-col>
@@ -90,10 +90,8 @@ export default {
           }
         }
       ).then((response) => {
-        setTimeout(() => {
-          this.ranking = response.data.results
-          this.loading = false
-        }, 5000)
+        this.ranking = response.data.results
+        this.loading = false
       })
     },
     getColor (rank) {
