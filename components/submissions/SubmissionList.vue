@@ -19,7 +19,10 @@
                 DOWNLOAD
               </b-col>
             </b-row>
-            <b-row v-for="(submission, i) in submissions" :key="i" class="custom-row">
+            <template v-if="loading">
+              <b-skeleton v-for="i in 3" :key="i" class="custom-row" height="3rem" />
+            </template>
+            <b-row v-for="(submission, i) in submissions" v-else :key="i" class="custom-row custom-row-table">
               <b-col cols="1" class="text-center id">
                 {{ i + 1 }}
               </b-col>
@@ -65,7 +68,8 @@ export default {
   ],
   data () {
     return {
-      submissions: []
+      submissions: [],
+      loading: false
     }
   },
   watch: {
@@ -85,6 +89,7 @@ export default {
       return score !== null && Math.trunc(score) !== -1
     },
     fetchSubmissions (challengeName, phase) {
+      this.loading = true
       this.$axios.get(
         '/' + challengeName + '/' + phase + '/submit/',
         {
@@ -95,6 +100,8 @@ export default {
       )
         .then((response) => {
           this.submissions = response.data.results
+        }).finally(() => {
+          this.loading = false
         })
     }
   }
@@ -146,11 +153,14 @@ export default {
 }
 
 .submission-table > .custom-row {
-  background: #D9D9D9;
   margin-top: 1rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   border-radius: 12px;
+}
+
+.submission-table > .custom-row-table {
+  background: #D9D9D9;
 }
 
 .custom-row > .time {

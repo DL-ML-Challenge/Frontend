@@ -30,7 +30,10 @@
             SCORE
           </b-col>
         </b-row>
-        <b-row v-for="(rank, i) in ranking" :key="i" class="main-row custom-row">
+        <template v-if="loading">
+          <b-skeleton v-for="i in 3" :key="i" class="main-row custom-row"></b-skeleton>
+        </template>
+        <b-row v-else v-for="(rank, i) in ranking" :key="i" class="main-row custom-row main-row-table">
           <b-col class="text-left">
             {{ rank.name }}
           </b-col>
@@ -61,7 +64,8 @@ export default {
   ],
   data () {
     return {
-      ranking: []
+      ranking: [],
+      loading: false
     }
   },
   watch: {
@@ -77,6 +81,7 @@ export default {
   },
   methods: {
     fetchRanking (challengeName, phase) {
+      this.loading = true
       this.$axios.get(
         '/' + challengeName + '/' + phase + '/ranking/',
         {
@@ -85,7 +90,10 @@ export default {
           }
         }
       ).then((response) => {
-        this.ranking = response.data.results
+        setTimeout(() => {
+          this.ranking = response.data.results
+          this.loading = false
+        }, 5000)
       })
     },
     getColor (rank) {
@@ -132,8 +140,11 @@ export default {
 }
 
 .main-row {
-  background: #D9D9D9;
   border-radius: 12px;
+}
+
+.main-row-table {
+  background: #D9D9D9;
 }
 
 .dot {
