@@ -8,4 +8,4 @@ RUN yarn install --frozen-lockfile
 
 COPY . .
 
-RUN yarn build
+RUN yarn build && yarn generate
