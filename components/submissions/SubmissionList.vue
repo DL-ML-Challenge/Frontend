@@ -59,31 +59,43 @@ export default {
       return result
     }
   },
+  props: [
+    'challengeName',
+    'phase'
+  ],
   data () {
     return {
       submissions: []
     }
   },
-  beforeMount () {
-    const challengeName = this.$parent.challengeName()
-    const phase = this.$parent.phase()
-    this.$axios.get(
-      '/' + challengeName + '/' + phase + '/submit/',
-      {
-        headers: {
-          Authorization: this.$store.state.token.token
-        }
-      }
-    )
-      .then((response) => {
-        console.log(response.data)
-        this.submissions = response.data.results
-      })
+  watch: {
+    challengeName (n, o) {
+      this.fetchSubmissions(n, this.phase)
+    },
+    phase (n, o) {
+      this.fetchSubmissions(this.challengeName, o)
+    }
+  },
+  created () {
+    this.fetchSubmissions(this.challengeName, this.phase)
   },
   methods: {
     isScoreJudged (score) {
       console.log(score)
       return score !== null && Math.trunc(score) !== -1
+    },
+    fetchSubmissions (challengeName, phase) {
+      this.$axios.get(
+        '/' + challengeName + '/' + phase + '/submit/',
+        {
+          headers: {
+            Authorization: this.$store.state.token.token
+          }
+        }
+      )
+        .then((response) => {
+          this.submissions = response.data.results
+        })
     }
   }
 }

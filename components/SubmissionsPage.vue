@@ -53,7 +53,7 @@
         <SubmitBox />
       </div>
       <div class="mt-5">
-        <SubmissionList />
+        <SubmissionList :challenge-name="chosenChallengeName" :phase="phase()" />
       </div>
     </div>
   </div>
@@ -70,7 +70,13 @@ export default {
   components: { SubmissionList, SubmitBox, Dot, MLCLogo },
   data () {
     return {
-      chosenTopic: 0
+      chosenTopic: 0,
+      chosenChallengeName: this.challengeName(0)
+    }
+  },
+  watch: {
+    chosenTopic (n, o) {
+      this.chosenChallengeName = this.challengeName(n)
     }
   },
   methods: {
@@ -78,8 +84,8 @@ export default {
       this.$store.commit('token/unset')
       this.$router.push('/')
     },
-    challengeName () {
-      if (this.chosenTopic === 0) {
+    challengeName (topic) {
+      if (topic === 0) {
         return 'vision'
       } else {
         return 'nlp'
