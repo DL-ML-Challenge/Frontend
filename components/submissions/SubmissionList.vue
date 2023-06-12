@@ -10,7 +10,7 @@
             <b-row class="first-row">
               <b-col cols="1" />
               <b-col class="text-left ml-2">
-                TIME
+                TIME (SINCE SUBMIT)
               </b-col>
               <b-col class="text-center">
                 SCORE
