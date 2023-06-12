@@ -5,7 +5,7 @@
     </div>
     <form @submit.prevent="login()">
       <div class="login-stn-container">
-        <label>STUDENT NUMBER OR EMAIL</label>
+        <label>STUDENT NUMBER</label>
         <input
           id="username"
           v-model="loginData.username"
@@ -16,12 +16,11 @@
         >
       </div>
       <div class="login-nc-container">
-        <label>NATIONAL NUMBER</label>
+        <label>PASSWORD</label>
         <input
           v-model="loginData.password"
           type="password"
           class="login-input"
-          placeholder="0123456789"
           name="password"
         >
       </div>
