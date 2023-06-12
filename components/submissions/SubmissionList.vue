@@ -31,7 +31,12 @@
               </b-col>
               <b-col class="text-center score">
                 <span v-if="isSubmissionJudged(submission) && !isErrored(submission)">{{ submission.score | roundScore }}</span>
-                <span v-else-if="isErrored(submission)" v-b-popover.hover.top="submission.error">ERROR</span>
+                <template v-else-if="isErrored(submission)">
+                  <span :id="`popover-error-${i}`">ERROR</span>
+                  <b-popover :target="`popover-error-${i}`" triggers="hover">
+                    <p class="error-message">{{ submission.error }}</p>
+                  </b-popover>
+                </template>
                 <span v-else>PENDING</span>
               </b-col>
               <b-col />
@@ -186,5 +191,10 @@ export default {
 
 .custom-row > .id {
   font-size: 1.2rem;
+}
+
+.error-message {
+  font-family: "Avenir Next LT Pro", sans-serif;
+  white-space: pre-wrap;
 }
 </style>
