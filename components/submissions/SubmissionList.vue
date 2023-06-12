@@ -30,7 +30,8 @@
                 {{ submission.created_at | verboseDate }}
               </b-col>
               <b-col class="text-center score">
-                <span v-if="isScoreJudged(submission.score)">{{ submission.score | roundScore }}</span>
+                <span v-if="isSubmissionJudged(submission) && !isErrored(submission)">{{ submission.score | roundScore }}</span>
+                <span v-else-if="isErrored(submission)" v-b-popover.hover.top="submission.error">ERROR</span>
                 <span v-else>PENDING</span>
               </b-col>
               <b-col />
@@ -54,7 +55,7 @@ export default {
       const diff = Math.trunc((Date.now() - new Date(date)) / 1000)
       const days = Math.trunc(diff / 60 / 60 / 24)
       const hours = Math.trunc((diff) % (60 * 60 * 24) / 60 / 60)
-      const minutes = Math.trunc((diff % 360) / 60)
+      const minutes = Math.trunc((diff % (60 * 60)) / 60)
       let result = String(hours).padStart(2, '0') + ':' + String(minutes).padStart(2, '0')
       if (days > 0) {
         result = days + ' Days ' + result
@@ -84,9 +85,11 @@ export default {
     this.fetchSubmissions(this.challengeName, this.phase)
   },
   methods: {
-    isScoreJudged (score) {
-      console.log(score)
-      return score !== null && Math.trunc(score) !== -1
+    isSubmissionJudged (submission) {
+      return submission.is_judged
+    },
+    isErrored (submission) {
+      return Boolean(submission.error)
     },
     fetchSubmissions (challengeName, phase) {
       this.loading = true

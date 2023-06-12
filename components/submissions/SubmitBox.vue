@@ -39,6 +39,10 @@
 
 export default {
   name: 'SubmitBox',
+  props: [
+    'challengeName',
+    'phase'
+  ],
   data () {
     return {
       loading: false,
@@ -56,27 +60,36 @@ export default {
       }
       return null
     },
+    emptyFile () {
+      this.$refs.fileInput.value = ''
+    },
     submit () {
       this.loading = true
-      const challengeName = this.$parent.challengeName()
-      const phase = this.$parent.phase()
 
       const formData = new FormData()
       formData.append('file', this.file())
       this.$axios.post(
-        '/' + challengeName + '/' + phase + '/submit/',
+        '/' + this.challengeName + '/' + this.phase + '/submit/',
         formData,
         {
           headers: { Authorization: this.$store.state.token.token },
           'Content-Type': 'multipart/form-data'
         }).then((response) => {
         this.loading = false
-        location.reload()
+        this.$emit('submitted')
+        this.emptyFile()
+        this.$bvToast.toast('File submitted.', {
+          title: 'Submission',
+          variant: 'success',
+          autoHideDelay: 5000
+        })
       })
         .catch((error) => {
           console.log(error)
           this.loading = false
-          this.$bvToast.toast('Failed to submit file', {
+          this.$bvToast.toast('Failed to submit file.', {
+            title: 'Submission',
+            variant: 'danger',
             autoHideDelay: 5000
           })
         })

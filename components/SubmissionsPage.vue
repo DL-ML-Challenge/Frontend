@@ -50,10 +50,10 @@
     </div>
     <div class="page-container">
       <div class="submit-box">
-        <SubmitBox />
+        <SubmitBox :challenge-name="chosenChallengeName" :phase="phase()" @submitted="refreshSubmissionList" />
       </div>
       <div class="mt-5">
-        <SubmissionList :challenge-name="chosenChallengeName" :phase="phase()" />
+        <SubmissionList ref="submissionList" :challenge-name="chosenChallengeName" :phase="phase()" />
       </div>
     </div>
   </div>
@@ -93,6 +93,9 @@ export default {
     },
     phase () {
       return '1'
+    },
+    refreshSubmissionList () {
+      this.$refs.submissionList.fetchSubmissions(this.chosenChallengeName, this.phase())
     }
   }
 }
