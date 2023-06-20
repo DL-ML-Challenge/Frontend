@@ -1,5 +1,7 @@
 <template>
-  <img class="mlc" src="~/assets/MLC.svg#svgView(preserveAspectRatio(none))" alt="MLC Logo">
+  <NuxtLink to="/">
+    <img class="mlc" src="~/assets/MLC.svg#svgView(preserveAspectRatio(none))" alt="MLC Logo">
+  </NuxtLink>
 </template>
 
 <script>
