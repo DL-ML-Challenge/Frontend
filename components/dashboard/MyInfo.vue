@@ -6,17 +6,22 @@
     <div class="data-container">
       <div class="username-container">
         <div>USERNAME:</div>
-        <div>{{ username }}</div>
+        <div :class="{persian: containsPersian(username)}">
+          {{ username }}
+        </div>
       </div>
       <div class="team-container">
         <div>TEAM NAME:</div>
-        <div>{{ teamName }}</div>
+        <div :class="{persian: containsPersian(teamName)}">
+          {{ teamName }}
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { containsPersian } from '~/plugins/utility.js'
 
 export default {
   name: 'MyInfo',
@@ -27,6 +32,9 @@ export default {
     teamName () {
       return this.$store.state.userData.teamName
     }
+  },
+  methods: {
+    containsPersian
   }
 }
 </script>

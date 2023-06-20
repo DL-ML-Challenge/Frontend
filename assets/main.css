@@ -50,6 +50,24 @@
   font-weight: light;
 }
 
+@font-face {
+  font-family: "IRANSans";
+  src: url("~/assets/fonts/IRANSansXMedium.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "IRANSans";
+  src: url("~/assets/fonts/IRANSansXLight.ttf");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "IRANSans";
+  src: url("~/assets/fonts/IRANSansXBlack.ttf");
+  font-weight: 700;
+}
+
 .btn:focus {
   outline: none;
   box-shadow: none;
@@ -62,4 +80,9 @@ a {
 a:hover {
   color: inherit;
   text-decoration: initial;
+}
+
+.persian {
+  font-family: IRANSans, sans-serif;
+  letter-spacing: 0;
 }

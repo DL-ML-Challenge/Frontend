@@ -34,7 +34,7 @@
           <b-skeleton v-for="i in 3" :key="i" class="main-row custom-row" />
         </template>
         <b-row v-for="(rank, i) in ranking" v-else :key="i" class="main-row custom-row main-row-table">
-          <b-col class="text-left">
+          <b-col :class="{'text-left': true, persian: containsPersian(rank.name)}">
             {{ rank.name }}
           </b-col>
           <b-col class="text-right">
@@ -49,6 +49,7 @@
 <script>
 
 import Dot from '../Dot.vue'
+import { containsPersian } from '~/plugins/utility'
 
 export default {
   name: 'RankingTable',
@@ -86,6 +87,7 @@ export default {
     this.fetchRanking(this.challengeName, this.phase)
   },
   methods: {
+    containsPersian,
     fetchRanking (challengeName, phase) {
       this.loading = true
       this.$axios.get(
