@@ -12,7 +12,7 @@
       </p>
     </div>
     <div class="d-flex flex-row mt-2 p-2 h-50">
-      <b-card class="mr-4 box-container nlp" no-body>
+      <b-card class="mr-2 box-container nlp" no-body>
         <b-card-body>
           <p class="topic mb-0">
             FIRST TOPIC
@@ -22,13 +22,23 @@
           </p>
         </b-card-body>
       </b-card>
-      <b-card class="box-container vision" no-body>
+      <b-card class="box-container vision mr-2" no-body>
         <b-card-body>
           <p class="topic mb-0">
             SECOND TOPIC
           </p>
           <p class="topic-name">
             VISION
+          </p>
+        </b-card-body>
+      </b-card>
+      <b-card class="box-container nlp" no-body>
+        <b-card-body>
+          <p class="topic mb-0">
+            THIRD TOPIC
+          </p>
+          <p class="topic-name">
+            ML
           </p>
         </b-card-body>
       </b-card>
@@ -71,7 +81,7 @@ export default {
 }
 
 .box-container {
-  width: 30%;
+  width: 25%;
   height: 80%;
   border-radius: 13px;
   color: #BBC3E0;
@@ -85,15 +95,22 @@ export default {
   background: #06004F;
 }
 
+.box-container .card-body {
+  padding: 1rem 0.5rem 0 0.5rem;
+}
+
 .topic {
   font-family: "Avenir Next LT Pro", sans-serif;
   font-size: 1rem;
+  white-space: nowrap;
   font-weight: 400;
 }
 
 .topic-name {
   font-size: 1.5rem;
+  white-space: nowrap;
   letter-spacing: 0.2rem;
+  margin-top: 0.5rem;
   font-family: "Avenir Next LT Pro", sans-serif;
   font-weight: 700;
 }
