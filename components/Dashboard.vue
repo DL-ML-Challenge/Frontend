@@ -32,7 +32,9 @@
     </div>
     <div class="page-container">
       <div class="section submit">
-        <Submit @click.native="goToSubmissions()" />
+        <NuxtLink to="/submissions">
+          <Submit />
+        </NuxtLink>
       </div>
       <div class="section">
         <MyInfo />
@@ -75,9 +77,6 @@ export default {
     logout () {
       this.$store.commit('token/unset')
       this.$router.push('/')
-    },
-    goToSubmissions () {
-      this.$router.push('/submissions')
     }
   }
 }

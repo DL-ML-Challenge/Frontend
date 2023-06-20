@@ -8,15 +8,17 @@
     </div>
     <b-card-group deck class="w-75 mt-3">
       <b-card no-body class="phase-card">
-        <b-card-body class="position-relative pb-0 phase1 phase-body" @click.prevent="goToRanking()">
-          <div class="phase-text">
-            <span>Phase</span>
-            <span class="font-weight-bold">One</span>
-          </div>
-          <div class="line-container">
-            <div class="line black" />
-          </div>
-        </b-card-body>
+        <NuxtLink to="/ranking">
+          <b-card-body class="position-relative pb-0 phase1 phase-body">
+            <div class="phase-text">
+              <span>Phase</span>
+              <span class="font-weight-bold">One</span>
+            </div>
+            <div class="line-container">
+              <div class="line black" />
+            </div>
+          </b-card-body>
+        </NuxtLink>
       </b-card>
       <b-card no-body class="phase-card">
         <b-card-body class="position-relative pb-0 phase2 phase-body">
@@ -51,12 +53,7 @@
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: 'Ranking',
-  methods: {
-    goToRanking () {
-      this.$router.push('/ranking')
-    }
-  }
+  name: 'Ranking'
 }
 </script>
 
