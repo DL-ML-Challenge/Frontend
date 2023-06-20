@@ -34,7 +34,9 @@
                 <template v-else-if="isErrored(submission)">
                   <span :id="`popover-error-${i}`">ERROR</span>
                   <b-popover :target="`popover-error-${i}`" triggers="hover">
-                    <p class="error-message">{{ submission.error }}</p>
+                    <p class="error-message">
+                      {{ submission.error }}
+                    </p>
                   </b-popover>
                 </template>
                 <span v-else>PENDING</span>
@@ -68,10 +70,16 @@ export default {
       return result
     }
   },
-  props: [
-    'challengeName',
-    'phase'
-  ],
+  props: {
+    challengeName: {
+      type: String,
+      default: ''
+    },
+    phase: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       submissions: [],

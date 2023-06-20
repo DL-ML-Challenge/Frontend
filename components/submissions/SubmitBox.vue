@@ -39,10 +39,16 @@
 
 export default {
   name: 'SubmitBox',
-  props: [
-    'challengeName',
-    'phase'
-  ],
+  props: {
+    challengeName: {
+      type: String,
+      default: ''
+    },
+    phase: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       loading: false,
@@ -84,8 +90,7 @@ export default {
           autoHideDelay: 5000
         })
       })
-        .catch((error) => {
-          console.log(error)
+        .catch((_) => {
           this.loading = false
           this.$bvToast.toast('Failed to submit file.', {
             title: 'Submission',

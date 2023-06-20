@@ -58,10 +58,16 @@ export default {
       return Math.round(score * 100) / 100
     }
   },
-  props: [
-    'challengeName',
-    'phase'
-  ],
+  props: {
+    challengeName: {
+      type: String,
+      default: ''
+    },
+    phase: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       ranking: [],
