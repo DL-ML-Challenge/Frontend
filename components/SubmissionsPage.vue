@@ -69,14 +69,22 @@ export default {
   name: 'SubmissionsPage',
   components: { SubmissionList, SubmitBox, Dot, MLCLogo },
   data () {
+    let chosenTopic
+    if (this.$route.query.name) {
+      chosenTopic = this.nameToTopic(this.$route.query.name)
+      this.$router.replace({ query: { ...this.$route.query, name: this.challengeName(chosenTopic) } })
+    } else {
+      chosenTopic = 0
+    }
     return {
-      chosenTopic: 0,
-      chosenChallengeName: this.challengeName(0)
+      chosenTopic,
+      chosenChallengeName: this.challengeName(chosenTopic)
     }
   },
   watch: {
     chosenTopic (n, o) {
       this.chosenChallengeName = this.challengeName(n)
+      this.$router.replace({ query: { ...this.$route.query, name: this.chosenChallengeName } })
     }
   },
   methods: {
@@ -92,6 +100,17 @@ export default {
       } else {
         return 'ml'
       }
+    },
+    nameToTopic (name) {
+      let topic = {
+        vision: 0,
+        nlp: 1,
+        ml: 2
+      }[name]
+      if (topic === undefined) {
+        topic = 0
+      }
+      return topic
     },
     phase () {
       return '1'

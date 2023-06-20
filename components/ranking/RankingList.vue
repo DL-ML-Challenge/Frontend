@@ -42,9 +42,16 @@ export default {
   name: 'RankingList',
   components: { RankingTable },
   data () {
+    let chosenTopic
+    if (this.$route.query.name) {
+      chosenTopic = this.nameToTopic(this.$route.query.name)
+      this.$router.replace({ query: { ...this.$route.query, name: this.challengeName(chosenTopic) } })
+    } else {
+      chosenTopic = 0
+    }
     return {
-      chosenTopic: 0,
-      chosenChallengeName: 'vision',
+      chosenTopic,
+      chosenChallengeName: this.challengeName(chosenTopic),
       phase: '1',
       ranking: []
     }
@@ -52,6 +59,7 @@ export default {
   watch: {
     chosenTopic (newTopic, oldTopic) {
       this.chosenChallengeName = this.challengeName(newTopic)
+      this.$router.replace({ query: { ...this.$route.query, name: this.chosenChallengeName } })
     }
   },
   methods: {
@@ -61,6 +69,16 @@ export default {
       } else {
         return 'nlp'
       }
+    },
+    nameToTopic (name) {
+      let topic = {
+        vision: 0,
+        nlp: 1
+      }[name]
+      if (topic === undefined) {
+        topic = 0
+      }
+      return topic
     }
   }
 }
