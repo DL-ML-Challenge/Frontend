@@ -40,7 +40,7 @@
     </div>
     <div class="page-header topic-button-container mt-3">
       <b-button
-        v-for="(topicText, i) in ['VISION', 'NLP']"
+        v-for="(topicText, i) in ['VISION', 'NLP', 'ML']"
         :key="i"
         :class="{'topic-button': true, 'enabled': chosenTopic === i, 'disabled': chosenTopic !== i}"
         @click.prevent="chosenTopic = i"
@@ -87,8 +87,10 @@ export default {
     challengeName (topic) {
       if (topic === 0) {
         return 'vision'
-      } else {
+      } else if (topic === 1) {
         return 'nlp'
+      } else {
+        return 'ml'
       }
     },
     phase () {
