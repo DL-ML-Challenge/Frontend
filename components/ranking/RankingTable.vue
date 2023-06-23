@@ -33,9 +33,21 @@
         <template v-if="loading">
           <b-skeleton v-for="i in 3" :key="i" class="main-row custom-row" />
         </template>
-        <b-row v-for="(rank, i) in ranking" v-else :key="i" class="main-row custom-row main-row-table">
+        <b-row
+          v-for="(rank, i) in ranking"
+          v-else
+          :key="i"
+          class="main-row custom-row main-row-table"
+          @mouseover="() => {$refs['popover-p-' + i][0].$emit('open')}"
+          @mouseleave="() => {$refs['popover-p-' + i][0].$emit('close')}"
+        >
           <b-col :class="{'text-left': true, persian: containsPersian(rank.name)}">
-            {{ rank.name }}
+            <span :id="`popover-rank-${i}`">{{ rank.name }}</span>
+            <b-popover :target="`popover-rank-${i}`" :ref="`popover-p-${i}`">
+              <div v-for="(user, i) in rank.users" :key="i" :class="{persian: containsPersian(user.full_name)}">
+                {{ user.full_name }}
+              </div>
+            </b-popover>
           </b-col>
           <b-col class="text-right">
             {{ rank.best_score | roundScore }}
