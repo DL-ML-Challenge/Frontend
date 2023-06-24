@@ -43,7 +43,7 @@
         >
           <b-col :class="{'text-left': true, persian: containsPersian(rank.name)}">
             <span :id="`popover-rank-${i}`">{{ rank.name }}</span>
-            <b-popover :target="`popover-rank-${i}`" :ref="`popover-p-${i}`">
+            <b-popover :ref="`popover-p-${i}`" :target="`popover-rank-${i}`">
               <div v-for="(user, i) in rank.users" :key="i" :class="{persian: containsPersian(user.full_name)}">
                 {{ user.full_name }}
               </div>

@@ -38,6 +38,7 @@
         <Login />
       </div>
     </div>
+    <FooterComponent />
   </div>
 </template>
 
@@ -47,10 +48,11 @@ import MLC from '~/components/MLC'
 import WhatIsIt from '~/components/WhatIsIt'
 import MLCLogo from '~/components/MLCLogo'
 import Dot from '~/components/Dot'
+import FooterComponent from '~/components/FooterComponent'
 
 export default {
   name: 'MainPage',
-  components: { Dot, MLCLogo, WhatIsIt, MLC, Login },
+  components: { FooterComponent, Dot, MLCLogo, WhatIsIt, MLC, Login },
   data () {
     return {
       sections: [
