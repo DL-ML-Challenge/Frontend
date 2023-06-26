@@ -7,13 +7,13 @@
             ranking
           </div>
           <div class="page-header">
-            <b-button class="phase-button phase1">
+            <b-button class="phase-button phase1" :class="{'chosen-button': phase === '1'}" @click.prevent="phase = '1'">
               <span class="font-weight-light">PHASE</span> <span class="font-weight-bold">ONE</span>
             </b-button>
-            <b-button class="phase-button phase2" disabled>
+            <b-button class="phase-button phase2" :disabled="Number(currentPhase()) < 2" :class="{'chosen-button': phase === '2'}" @click.prevent="phase = '2'">
               <span class="font-weight-light">PHASE</span> <span class="font-weight-bold">TWO</span>
             </b-button>
-            <b-button class="phase-button phase3" disabled>
+            <b-button class="phase-button phase3" :disabled="Number(currentPhase()) < 3" :class="{'chosen-button': phase === '3'}" @click.prevent="phase = '3'">
               <span class="font-weight-light">PHASE</span> <span class="font-weight-bold">THREE</span>
             </b-button>
           </div>
@@ -49,10 +49,20 @@ export default {
     } else {
       chosenTopic = 0
     }
+    let phase
+    if (this.$route.query.phase) {
+      phase = this.$route.query.phase
+      if (!['1', '2', '3'].includes(phase)) {
+        phase = '1'
+        this.$router.replace({ query: { ...this.$route.query, phase } })
+      }
+    } else {
+      phase = this.currentPhase()
+    }
     return {
       chosenTopic,
       chosenChallengeName: this.challengeName(chosenTopic),
-      phase: '1',
+      phase,
       ranking: []
     }
   },
@@ -60,6 +70,9 @@ export default {
     chosenTopic (newTopic, oldTopic) {
       this.chosenChallengeName = this.challengeName(newTopic)
       this.$router.replace({ query: { ...this.$route.query, name: this.chosenChallengeName } })
+    },
+    phase (n, o) {
+      this.$router.replace({ query: { ...this.$route.query, phase: n } })
     }
   },
   methods: {
@@ -79,6 +92,9 @@ export default {
         topic = 0
       }
       return topic
+    },
+    currentPhase () {
+      return '2'
     }
   }
 }
@@ -130,24 +146,14 @@ export default {
   border-radius: 52px;
   padding-right: 3%;
   padding-left: 3%;
+  font-size: 1rem;
   letter-spacing: 0.2rem;
+  background: transparent;
 }
 
-.phase1 {
-  font-size: 1rem;
+.chosen-button {
   background: #D9D9D9;
   color: black;
-  border: 0;
-}
-
-.phase2 {
-  font-size: 1rem;
-  background: transparent;
-}
-
-.phase3 {
-  font-size: 1rem;
-  background: transparent;
 }
 
 .page-header.topic-button-container {

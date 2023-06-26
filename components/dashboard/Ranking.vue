@@ -8,7 +8,7 @@
     </div>
     <b-card-group deck class="w-75 mt-3">
       <b-card no-body class="phase-card">
-        <NuxtLink to="/ranking">
+        <NuxtLink :to="{path: 'ranking', query: {phase: '1'}}">
           <b-card-body class="position-relative pb-0 phase1 phase-body">
             <div class="phase-text">
               <span>Phase</span>
@@ -21,16 +21,18 @@
         </NuxtLink>
       </b-card>
       <b-card no-body class="phase-card">
-        <b-card-body class="position-relative pb-0 phase2 phase-body">
-          <div class="phase-text">
-            <span>Phase</span>
-            <span class="font-weight-bold">Two</span>
-          </div>
-          <div class="line-container">
-            <div class="line white" />
-            <div class="line white" />
-          </div>
-        </b-card-body>
+        <NuxtLink :to="{path: 'ranking', query: {phase: '2'}}">
+          <b-card-body class="position-relative pb-0 phase2 phase-body">
+            <div class="phase-text">
+              <span>Phase</span>
+              <span class="font-weight-bold">Two</span>
+            </div>
+            <div class="line-container">
+              <div class="line white" />
+              <div class="line white" />
+            </div>
+          </b-card-body>
+        </NuxtLink>
       </b-card>
       <b-card no-body class="phase-card">
         <b-card-body class="position-relative pb-0 phase3 phase-body">

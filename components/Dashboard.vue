@@ -55,7 +55,7 @@ import MLCLogo from './MLCLogo.vue'
 import Dot from './Dot.vue'
 import Submit from './dashboard/Submit.vue'
 import MyInfo from './dashboard/MyInfo.vue'
-import Phase1 from './dashboard/Phase1.vue'
+import Phase1 from './dashboard/Phase2.vue'
 import Ranking from './dashboard/Ranking.vue'
 
 export default {

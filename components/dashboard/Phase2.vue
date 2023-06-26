@@ -4,7 +4,7 @@
       <div class="d-flex flex-row">
         <span class="mr-3">PHASE</span>
         <span class="font-weight-bold">
-          ONE
+          TWO
         </span>
       </div>
       <p class="text-uppercase">
@@ -29,16 +29,6 @@
           </p>
           <p class="topic-name">
             VISION
-          </p>
-        </b-card-body>
-      </b-card>
-      <b-card class="box-container nlp" no-body>
-        <b-card-body>
-          <p class="topic mb-0">
-            THIRD TOPIC
-          </p>
-          <p class="topic-name">
-            ML
           </p>
         </b-card-body>
       </b-card>

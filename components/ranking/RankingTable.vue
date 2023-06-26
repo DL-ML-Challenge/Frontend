@@ -92,7 +92,7 @@ export default {
       this.fetchRanking(n, this.phase)
     },
     phase (n, o) {
-      this.fetchRanking(this.challengeName, o)
+      this.fetchRanking(this.challengeName, n)
     }
   },
   mounted () {

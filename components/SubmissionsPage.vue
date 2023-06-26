@@ -28,32 +28,58 @@
       </nav>
     </div>
     <div class="page-header">
-      <b-button class="phase-button phase1">
+      <b-button
+        class="phase-button"
+        :style="{
+          border: this.phase !== '1'? `1px solid ${phaseColor('1')}`: 0,
+          background: this.phase === '1'? phaseColor('1') : 'transparent',
+          fontSize: '1.5rem'
+        }"
+        @click.prevent="phase = '1'"
+      >
         <span class="font-weight-light">PHASE</span> <span class="font-weight-bold">ONE</span>
       </b-button>
-      <b-button class="phase-button phase2" disabled>
+      <b-button
+        class="phase-button"
+        :style="{
+          border: this.phase !== '2'? `1px solid ${phaseColor('2')}`: 0,
+          background: this.phase === '2'? phaseColor('2') : 'transparent',
+          fontSize: '1.5rem'
+        }"
+        :disabled="Number(currentPhase()) < 2"
+        @click.prevent="phase = '2'"
+      >
         <span class="font-weight-light">PHASE</span> <span class="font-weight-bold">TWO</span>
       </b-button>
-      <b-button class="phase-button phase3" disabled>
+      <b-button
+        class="phase-button"
+        :style="{
+          border: this.phase !== '3'? `1px solid ${phaseColor('3')}`: 0,
+          background: this.phase === '3'? phaseColor('3') : 'transparent',
+          fontSize: '1.5rem'
+        }"
+        :disabled="Number(currentPhase()) < 3"
+        @click.prevent="phase = '3'"
+      >
         <span class="font-weight-light">PHASE</span> <span class="font-weight-bold">THREE</span>
       </b-button>
     </div>
     <div class="page-header topic-button-container mt-3">
       <b-button
-        v-for="(topicText, i) in ['VISION', 'NLP', 'ML']"
+        v-for="(topicText, i) in challenges"
         :key="i"
-        :class="{'topic-button': true, 'enabled': chosenTopic === i, 'disabled': chosenTopic !== i}"
+        :class="{'topic-button': true, 'enabled': chosenTopic === i, 'disabled': chosenTopic !== i, 'text-uppercase': true}"
         @click.prevent="chosenTopic = i"
       >
         {{ topicText }}
       </b-button>
     </div>
     <div class="page-container">
-      <div class="submit-box">
-        <SubmitBox :challenge-name="chosenChallengeName" :phase="phase()" @submitted="refreshSubmissionList" />
+      <div class="submit-box" v-if="ongoingChallenge()">
+        <SubmitBox :challenge-name="chosenChallengeName" :phase="phase" @submitted="refreshSubmissionList" />
       </div>
       <div class="mt-5">
-        <SubmissionList ref="submissionList" :challenge-name="chosenChallengeName" :phase="phase()" />
+        <SubmissionList ref="submissionList" :challenge-name="chosenChallengeName" :phase="phase" />
       </div>
     </div>
   </div>
@@ -76,18 +102,53 @@ export default {
     } else {
       chosenTopic = 0
     }
+    let phase
+    if (this.$route.query.phase) {
+      phase = this.nameToTopic(this.$route.query.phase)
+      if (!['1', '2', '3'].includes(phase)) {
+        phase = this.currentPhase()
+        this.$router.replace({ query: { ...this.$route.query, phase } })
+      }
+    } else {
+      phase = this.currentPhase()
+    }
     return {
       chosenTopic,
-      chosenChallengeName: this.challengeName(chosenTopic)
+      chosenChallengeName: this.challengeName(chosenTopic),
+      phase,
+      phases: []
+    }
+  },
+  computed: {
+    challenges () {
+      return this.phases.filter(phase => this.phase === phase.name).map(phase => phase.challenge_name)
     }
   },
   watch: {
     chosenTopic (n, o) {
       this.chosenChallengeName = this.challengeName(n)
       this.$router.replace({ query: { ...this.$route.query, name: this.chosenChallengeName } })
+    },
+    phases (n, o) {
+      this.checkChosenTopic()
+    },
+    phase (n, o) {
+      this.$router.replace({ query: { ...this.$route.query, phase: n } }).then(
+        () => this.checkChosenTopic()
+      )
     }
   },
+  created () {
+    this.fetchPhases()
+  },
   methods: {
+    checkChosenTopic () {
+      if (!this.challenges.includes(this.chosenChallengeName)) {
+        this.chosenTopic = 0
+      } else {
+        this.chosenTopic = this.challenges.indexOf(this.chosenChallengeName)
+      }
+    },
     logout () {
       this.$store.commit('token/unset')
       this.$router.push('/')
@@ -112,11 +173,39 @@ export default {
       }
       return topic
     },
-    phase () {
-      return '1'
+    currentPhase () {
+      return '2'
     },
     refreshSubmissionList () {
-      this.$refs.submissionList.fetchSubmissions(this.chosenChallengeName, this.phase())
+      this.$refs.submissionList.fetchSubmissions(this.chosenChallengeName, this.phase)
+    },
+    fetchPhases () {
+      this.$axios.get('phase/', {
+        headers: {
+          Authorization: this.$store.state.token.token
+        }
+      })
+        .then((response) => {
+          this.phases = response.data.results
+        })
+        .catch((_) => {
+          this.$router.replace('/dashboard')
+        })
+    },
+    ongoingChallenge () {
+      for (const phase of this.phases) {
+        if (phase.challenge_name === this.chosenChallengeName && phase.name === this.phase) {
+          return phase.is_ongoing
+        }
+      }
+      return false
+    },
+    phaseColor (phase) {
+      return {
+        1: '#510A8A',
+        2: '#141988',
+        3: '#730061'
+      }[phase]
     }
   }
 }
@@ -208,22 +297,20 @@ export default {
   padding-right: 3%;
   padding-left: 3%;
   letter-spacing: 0.2rem;
+  font-size: 1.5rem;
 }
 
 .phase1 {
-  font-size: 2rem;
-  background: #510A8A;
-  border: 0;
+  background: transparent;
+  border: 1px solid #510A8A;
 }
 
 .phase2 {
-  font-size: 1.5rem;
-  background: transparent;
-  border: 1px solid #141988;
+  background: #141988;
+  border: 0;
 }
 
 .phase3 {
-  font-size: 1.5rem;
   background: transparent;
   border: 1px solid #730061;
 }

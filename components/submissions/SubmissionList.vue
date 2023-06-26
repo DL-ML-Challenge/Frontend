@@ -91,7 +91,7 @@ export default {
       this.fetchSubmissions(n, this.phase)
     },
     phase (n, o) {
-      this.fetchSubmissions(this.challengeName, o)
+      this.fetchSubmissions(this.challengeName, n)
     }
   },
   created () {
